@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekipler</title>
+    <link rel="stylesheet" href="css/anasayfa.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<style> 
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #efeff2; 
+}
+
+.sidebar {
+    width: 210px;
+    height: 100vh;
+    background-color: #f8f8fb; 
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    padding: 20px;
+    z-index: 5;
+}
+
+.sidebar .logo img {
+    border-radius: 50%; 
+    width: 120px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.sidebar .user {
+    text-align: center;
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+
+.sidebar .user i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #d7ccc8; 
+}
+
+.sidebar .menu a {
+    margin-top:10px;
+    display: block;
+    color: #163662;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.sidebar .menu ul li a {
+    padding-left: 20px;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.sidebar .menu a:hover {
+    background-color: #e1e4e4; 
+    border-radius: 0px;
+    width: 250px;
+    margin-left: -18px;
+}
+
+
+.sidebar .menu a.active {
+    margin-top: 10px;
+    background-color: #e1e4e4; 
+    border-radius: 0px;
+    width:250px;
+    margin-left: -18px;
+
+}
+
+
+.logout {
+    text-align: center;
+}
+
+.logout button {
+    background-color: #e00000; 
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    margin-top:350px;
+}
+
+.logout button:hover {
+    background-color: #a60000; 
+}
+
+
+.content {
+    margin-left: 0px;
+    
+    position: relative;
+    z-index: 10;
+
+}
+
+.header {
+    margin-bottom: 20px;
+    background-color: #1a3c6b;
+    padding: 10px 15px;
+    height: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.header h2 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.header span {
+    color: #666;
+}
+
+.menu p  {
+    margin-left:-3px;
+    color:#163662
+    
+}
+
+.menu li {
+    margin-left: 0px;
+    color:#163662
+    
+}
+
+.sidebar .menu ul li .yozo-link {
+    color: #163662; /* Ana Sayfa ile aynı renk */
+    padding: 10px 20px; /* Ana Sayfa ile aynı iç boşluk */
+    text-decoration: none; /* Alt çizgiyi kaldır */
+    display: block; /* Genişlik kontrolü için blok eleman */
+    width: 100%; /* Menü genişliğini doldur */
+    border-radius: 0; /* Köşe yuvarlamasını sıfırla */
+    background-color: transparent; /* Varsayılan arka plan */
+}
+
+.sidebar .menu ul li .yozo-link:hover {
+    background-color: #e1e4e4; /* Hover sırasında arka plan */
+    color: #163662; /* Hover sırasında metin rengi */
+    border-radius: 0; /* Köşe yuvarlamasını sıfırla */
+    margin-right: -10px; /* Dış boşluk sıfır */
+    padding: 10px 20px; /* Ana Sayfa ile aynı padding */
+}
+
+
+
+
+#ekipperformansTable {
+    width: 30%;  
+    margin: 20px auto; 
+    border-collapse: collapse; 
+    background-color: #ffffff;  
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  
+    border-radius: 8px;  
+    margin-left: 340px;
+}
+
+
+#ekipperformansTable thead {
+    background-color: #673e1d;  
+    color: white;  
+    text-transform: uppercase;  
+}
+
+#ekipperformansTable th {
+    padding: 12px;  
+    text-align: center;  
+    border: 1px solid #ddd;  
+}
+
+
+#ekipperformansTable tbody {
+    background-color: #f9f9f9; 
+}
+
+#ekipperformansTable td {
+    padding: 10px;  
+    text-align: center;  
+    border: 1px solid #ddd;  
+}
+
+
+#ekipperformansTable tbody tr:hover {
+    background-color: #e1e4e4; 
+}
+
+
+#ekipperformansTable tbody tr:nth-child(even) {
+    background-color: #f1f1f1;  
+}
+
+#ekipperformansTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;  
+}
+
+
+#ekipperformansTable th, #kampanyaTable td {
+    border-radius: 4px;  
+}
+
+#ekipperformansTable td {
+    font-size: 12px; 
+}
+
+
+#ekipperformansTable_wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+
+#filterForm {
+    width: 20%; 
+    margin: 20px auto; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 10px 20px; 
+    background-color: #ffffff; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+    margin-left: 390px;
+}
+
+
+#filterForm label {
+    font-size: 14px; 
+    color: #333; 
+    margin-right: 10px; 
+}
+
+
+#filterForm input[type="number"] {
+    width: 100px; 
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 14px; 
+    text-align: center; 
+}
+
+
+#filterForm button {
+    background-color: #673e1d; 
+    color: #fff; 
+    border: none; 
+    padding: 8px 15px; 
+    font-size: 14px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+
+#filterForm button:hover {
+    background-color: #163662;
+}
+
+#ekipkarsilastirmaChart {
+
+width: 70% !important;   
+    height: 300px !important; 
+    margin-left: 66px;
+    margin-top: 30px;
+    z-index: 1000;
+    
+}
+
+
+.ekipkarsilastirma-container {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 50px; 
+}
+
+.ekipkarsilastirma-container2 {
+background-color: white; 
+padding: auto;  
+border-radius: 10px;  
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+width: 30%; 
+height: 400px;  
+position:absolute;
+bottom:73px;
+align-items: center;
+right:120px;
+
+
+
+}
+
+
+
+
+
+h1{
+    text-align:center;
+    margin-left: 185px;
+    font-family: "Montserrat" , serif;
+    font-size: 40px;
+}
+h3 {
+  text-align: center;
+  font-family: "Montserrat" , serif;
+  color:#2a2a2a
+  
+}
+
+</style> 
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+               
+            </div>
+            
+            <nav class="menu">
+                <a href="/anasayfa"><i class="fas fa-home"></i> Ana Sayfa</a>
+                <p><i class="fa-solid fa-tag"></i> Markalar</p>
+
+                <ul>
+                    <li><a href="/yozoUrban" class="yozo-link">Yozo Urban</a></li>
+                </ul>
+                
+                <a href="/ekipler" class="active"><i class="fa-solid fa-people-group"></i> Ekipler</a>
+                <a href="/odemeler"><i class="fas fa-calculator"></i> Ödemeler</a>
+            </nav>
+            <div class="logout">
+                <button onclick="logout()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="header">
+                <h2>Ajans Panel Logo</h2>
+                <span style="float: right;"><div class="user">
+                    <i class="fas fa-user-circle"></i> <span id="username">Loading...</span>
+                </div></span>
+            </div>
+            <h1> Ekip Performans </h1>
+            <form id="filterForm">
+                <label for="ekip_id">Ekip ID:</label>
+                <input type="number" id="ekip_id" name="Ekip ID" min="1" max="3" placeholder="1-3" required>
+        
+                
+        
+                <button type="submit">Filtrele</button>
+            </form>
+          
+    <table id="ekipperformansTable">
+        <thead>
+          <tr>
+            <th>Ekip ID</th>
+            <th>Kampanya Performans ID</th>
+            <th>Katkı Oranı (%)</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+    
+      </div>
+    </div>
+    </div>
+
+    <div class="ekipkarsilastirma-container">            
+        <div class="ekipkarsilastirma-container2">
+            <h3>Ekip Performans Dağılımı</h3>
+            <canvas id="ekipkarsilastirmaChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        fetch('/getUsers')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('username').innerText = data.username;
+    })
+    .catch(error => {
+        console.error('Kullanıcı adı alınamadı:', error);
+    });
+
+  
+        function logout() {
+            fetch('/logout')
+                .then(() => {
+                    window.location.href = '/login';
+                });
+        }
+
+        document.getElementById('filterForm').addEventListener('submit', function (e) {
+            e.preventDefault(); 
+            const ekip_id = document.getElementById('ekip_id').value;
+            
+
+            fetch(`/ekip/ekip-performans?ekip_id=${ekip_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#ekipperformansTable tbody');
+                    tableBody.innerHTML = ''; 
+
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        for (let key in row) {
+                            const td = document.createElement('td');
+                            td.textContent = row[key];
+                            tr.appendChild(td);
+                        }
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Filtreleme sırasında hata:', error);
+                });
+        });
+    
+
+fetch('/Ekipkarsilastirmadata')
+.then(response => response.json())
+.then(data => {
+    const ctx = document.getElementById('ekipkarsilastirmaChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: data,  
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';  
+                        }
+                    }
+                }
+            }
+        }
+    });
+})
+.catch(error => console.error('Hata oluştu:', error));
+
+    </script>
+</body>
+</html>

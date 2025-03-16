@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yozo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #efeff2; 
+        }
+
+       .sidebar {
+    width: 210px;
+    height: 100vh;
+    background-color: #f8f8fb; 
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    padding: 20px;
+    z-index: 5;
+}
+
+.sidebar .logo img {
+    border-radius: 50%; 
+    width: 120px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.sidebar .user {
+    text-align: center;
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+
+.sidebar .user i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #d7ccc8; 
+}
+
+.sidebar .menu a {
+    margin-top:10px;
+    display: block;
+    color: #163662;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.sidebar .menu ul li a {
+    padding-left: 20px;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.sidebar .menu a:hover {
+    background-color: #e1e4e4; 
+    border-radius: 0px;
+    width: 250px;
+    margin-left: -18px;
+}
+
+
+.sidebar .menu a.active {
+    margin-top: 10px;
+    background-color: #e1e4e4; 
+    border-radius: 0px;
+    width:250px;
+    margin-left: -18px;
+
+}
+
+
+.logout {
+    text-align: center;
+}
+
+.logout button {
+    background-color: #e00000; 
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    margin-top:350px;
+}
+
+.logout button:hover {
+    background-color: #a60000; 
+}
+
+
+.content {
+    margin-left: 0px;
+    
+    position: relative;
+    z-index: 10;
+
+}
+
+.header {
+    margin-bottom: 20px;
+    background-color: #1a3c6b;
+    padding: 10px 15px;
+    height: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.header h2 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.header span {
+    color: #666;
+}
+
+.menu p  {
+    margin-left:-3px;
+    color:#163662
+    
+}
+
+.menu li {
+    margin-left: 0px;
+    color:#163662
+    
+}
+
+.sidebar .menu ul li .yozo-link {
+    color: #163662; /* Ana Sayfa ile aynı renk */
+    padding: 10px 20px; /* Ana Sayfa ile aynı iç boşluk */
+    text-decoration: none; /* Alt çizgiyi kaldır */
+    display: block; /* Genişlik kontrolü için blok eleman */
+    width: 100%; /* Menü genişliğini doldur */
+    border-radius: 0; /* Köşe yuvarlamasını sıfırla */
+    background-color: transparent; /* Varsayılan arka plan */
+}
+
+.sidebar .menu ul li .yozo-link:hover {
+    background-color: #e1e4e4; /* Hover sırasında arka plan */
+    color: #163662; /* Hover sırasında metin rengi */
+    border-radius: 0; /* Köşe yuvarlamasını sıfırla */
+    margin-right: -10px; /* Dış boşluk sıfır */
+    padding: 10px 20px; /* Ana Sayfa ile aynı padding */
+}
+
+
+#kampanyaTable {
+    width: 70%;  
+    margin: 20px auto;  
+    border-collapse: collapse; 
+    background-color: #ffffff; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  
+    border-radius: 8px; 
+    margin-left: 340px;
+}
+
+
+#kampanyaTable thead {
+    background-color: #f4821e;  
+    color: white;  
+    text-transform: uppercase;  
+}
+
+#kampanyaTable th {
+    padding: 12px; 
+    text-align: center;  
+    border: 1px solid #ddd; 
+}
+
+
+#kampanyaTable tbody {
+    background-color: #f9f9f9; 
+}
+
+#kampanyaTable td {
+    padding: 10px; 
+    text-align: center; 
+    border: 1px solid #ddd;  
+}
+
+
+#kampanyaTable tbody tr:hover {
+    background-color: #e1e4e4; 
+}
+
+#kampanyaTable tbody tr:nth-child(even) {
+    background-color: #f1f1f1;  
+}
+
+#kampanyaTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;  
+}
+
+
+#kampanyaTable th, #kampanyaTable td {
+    border-radius: 4px;  
+}
+
+#kampanyaTable td {
+    font-size: 12px;  
+}
+
+
+#kampanyaTable_wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+
+#filterForm {
+    width: 40%; 
+    margin: 20px auto; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    padding: 10px 20px; 
+    background-color: #ffffff; 
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+    margin-left: 530px;
+}
+
+
+#filterForm label {
+    font-size: 14px;
+    color: #333; 
+    margin-right: 10px; 
+}
+
+
+#filterForm input[type="number"] {
+    width: 100px; 
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 14px; 
+    text-align: center; 
+}
+
+
+#filterForm button {
+    background-color: #f4821e;
+    color: #fff; 
+    border: none; 
+    padding: 8px 15px; 
+    font-size: 14px;
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+
+
+#filterForm button:hover {
+    background-color: #163662; 
+}
+   
+#icerikBarChart {
+        width: 90% !important;  
+        height: 280px !important; 
+        margin-left: 18px;
+        margin-top: 40px;
+        
+    }
+
+    .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; 
+}
+
+.chart-box {
+    background-color: white;  
+    padding: auto; 
+    border-radius: 10px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 35%;  
+
+    height: 330px; 
+    position:relative;
+    top:10px;
+    align-items: center;
+    right:180px;
+}
+
+#kampanyaturBarChart {
+        width: 85% !important;  
+        height: 420px !important; 
+        margin-left: 30px;
+        margin-top: 30px;
+        
+    }
+
+    .kampanyatur-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; 
+    
+}
+
+.kampanyatur-box {
+    background-color: white;  
+    padding: auto;  
+    border-radius: 10px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 70%;  
+ 
+    height: 450px;  
+    position:relative;
+    top:-369px;
+    align-items: center;
+    left:140px;
+}
+
+#platformBarChart {
+        width: 85% !important;   
+        height: 300px !important; 
+        margin-left: 30px;
+        margin-top: 30px;
+        
+    }
+
+    .platform-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; 
+    
+}
+
+.platform-box {
+    background-color: white;  
+    padding: auto; 
+    border-radius: 10px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 40%;  
+
+    height: 330px;  
+    position:relative;
+    top:-369px;
+    align-items: center;
+    left:415px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                            
+            </div>
+            
+            <nav class="menu">
+                <a href="/anasayfa" class="anasayfa-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+                <p><i class="fa-solid fa-tag"></i> Markalar</p>
+                <ul>
+                    <li><a href="/yozoUrban" class="yozo-link">Yozo Urban</a></li>
+                </ul>
+                <a href="/ekipler"><i class="fa-solid fa-people-group"></i> Ekipler</a>
+                <a href="/odemeler"><i class="fas fa-calculator"></i> Ödemeler</a>
+            </nav>
+            <div class="logout">
+                <button onclick="logout()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="header">
+                <h2>Ajans Panel Logo</h2>
+                <span style="float: right;"><div class="user">
+                    <i class="fas fa-user-circle"></i> <span id="username">Loading...</span>
+                </div></span>
+            </div>
+    </div>
+
+    <h1>Kampanya Performans Verileri</h1>
+
+    <form id="filterForm">
+        <label for="ay">Ay:</label>
+        <input type="number" id="ay" name="ay" min="1" max="12" placeholder="1-12" required>
+
+        <label for="yil">Yıl:</label>
+        <input type="number" id="yil" name="yil" value="2022" readonly> 
+
+        <button type="submit">Filtrele</button>
+    </form>
+
+    <table id="kampanyaTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>KAMPANYA TÜR ID</th>
+          <th>AY</th>
+          <th>YIL</th>
+          <th>GÖSTERİM SAYISI</th>
+          <th>TIKLANMA SAYISI</th>
+          <th>HARCANAN</th>
+          <th>ROI</th>
+          <th>CPC</th>
+          <th>DÖNÜŞÜM ORANI (%)</th>
+          <th>GELİR</th>
+          <th>ETKİLEŞİM ORANI (%)</th>
+     
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-box">
+          <canvas id="icerikBarChart"></canvas>
+        </div>
+    </div>
+
+    <div class="platform-container">
+        <div class="platform-box">
+          <canvas id="platformBarChart"></canvas>
+        </div>
+    </div>
+    
+    
+    <div class="kampanyatur-container">
+        <div class="kampanyatur-box">
+          <canvas id="kampanyaturBarChart"></canvas>
+        </div>
+    </div>
+
+   
+    
+
+    <script>
+        fetch('/getUsers')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('username').innerText = data.username;
+    })
+    .catch(error => {
+        console.error('Kullanıcı adı alınamadı:', error);
+    });
+
+   
+        function logout() {
+            fetch('/logout')
+                .then(() => {
+                    window.location.href = '/login';
+                });
+        }
+
+ 
+        window.addEventListener('DOMContentLoaded', () => {
+            const path = window.location.pathname; 
+
+      
+            if (path === '/yozoUrban') {
+                document.querySelector('.yozo-link').classList.add('active');
+            } else if (path === '/anasayfa') {
+                document.querySelector('.anasayfa-link').classList.add('active');
+            }
+        });
+
+
+        document.getElementById('filterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const ay = document.getElementById('ay').value;
+            const yil = document.getElementById('yil').value;
+
+            fetch(`/api/kampanya-performans?ay=${ay}&yil=${yil}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#kampanyaTable tbody');
+                    tableBody.innerHTML = ''; 
+
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        for (let key in row) {
+                            const td = document.createElement('td');
+                            td.textContent = row[key];
+                            tr.appendChild(td);
+                        }
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Filtreleme sırasında hata:', error);
+                });
+        });
+    </script>
+  <script>
+    fetch('/icerik/icerik-performans')
+    .then(response => response.json())
+    .then(data => {
+        console.log('Veri Alındı:', data);
+        if (data.length === 0) {
+            console.log('Veri boş geldi!');
+        }
+        
+     
+        const labels = data.map(item => item.icerik_tur_ad);  
+        const roiValues = data.map(item => item.toplam_gelir);  
+        function getColorForROI(value) {
+    if (value > 400000) return '#750909'; 
+    if (value > 300000) return '#c42525'; 
+    return '#f75454';
+}
+
+
+    
+        const ctx = document.getElementById('icerikBarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Yıllık İçerik Türü Performansları',
+                    data: roiValues,
+                    backgroundColor: roiValues.map(getColorForROI),  
+                    borderColor: 'rgba(230, 230, 230, 1)',  
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Gelir'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Veri alınamadı:', error);
+        
+        
+    });
+</script>
+
+<script>
+    fetch('/kampanyatur/kampanyatur-performans')
+    .then(response => response.json())
+    .then(data => {
+        console.log('Veri Alındı:', data);
+        if (data.length === 0) {
+            console.log('Veri boş geldi!');
+        }
+        
+        const labels = data.map(item => item.kampanya_tur_ad);  
+        const roiValues = data.map(item => item.toplam_gelir);  
+        function getColorForROI(value) {
+    if (value > 200000) return '#01470a'; 
+    if (value > 100000) return '#1ea62f'; 
+    return '#51fc66'; 
+}
+
+
+        
+        const ctx = document.getElementById('kampanyaturBarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Yıllık Kampanya Tür Performansları',
+                    data: roiValues,
+                    backgroundColor: roiValues.map(getColorForROI),  
+                    borderColor: 'rgba(230, 230, 230, 1)',  
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Gelir'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Veri alınamadı:', error);
+        
+        
+    });
+</script>
+
+
+<script>
+    fetch('/platform/platform-performans')
+    .then(response => response.json())
+    .then(data => {
+        console.log('Veri Alındı:', data);
+        if (data.length === 0) {
+            console.log('Veri boş geldi!');
+        }
+        
+ 
+        const labels = data.map(item => item.platform_ad);  
+        const roiValues = data.map(item => item.toplam_gelir);  
+        function getColorForROI(value) {
+    if (value > 400000) return '#1a3c6b'; 
+    if (value > 300000) return '#4589ff'; 
+    return '#a6c8ff'; 
+}
+
+
+        const ctx = document.getElementById('platformBarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Yıllık Platform Performansları',
+                    data: roiValues,
+                    backgroundColor: roiValues.map(getColorForROI),  
+                    borderColor: 'rgba(230, 230, 230, 1)', 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Gelir'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Veri alınamadı:', error);
+        
+        
+    });
+</script>
+    
+</body>
+</html>
